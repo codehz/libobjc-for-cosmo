@@ -31,3 +31,11 @@ jobs:
           sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
       - name: Run make
         run: make && tree
+      - name: Export as artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: libobjc
+          path: |
+            libobjc.a
+            .aarch64/libobjc.a
+            src/objc/*.h
