@@ -17,8 +17,10 @@ Use command `cosmocc -fobjc-exceptions -I<path-to-libobjc-inc> -L<path-to-libobj
 
 ## Available features
 
-GC: No
-Exception: Yes, require -fobjc-exceptions options, it will use SJLJ model of exceptions
+| Feature    | State        |
+| ---------: | :----------- |
+| GC         | ❌ Not enabled |
+| Exceptions | ✅ Yes, require -fobjc-exceptions options, it will use SJLJ model of exceptions |
 
 ## Why are you even want to create that? Is it even useful?
 
