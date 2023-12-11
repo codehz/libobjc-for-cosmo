@@ -1,7 +1,7 @@
 COSMO?=$(HOME)/.cosmo
 CC=$(COSMO)/bin/cosmocc
 AR=$(COSMO)/bin/cosmoar
-CFLAGS=-I$(PWD)/fakeinclude -I$(PWD)/src
+CFLAGS=-O2 -I$(PWD)/fakeinclude -I$(PWD)/src
 
 C_SRC := $(wildcard src/*.c)
 M_SRC := $(wildcard src/*.m)
@@ -12,9 +12,7 @@ libobjc.a: $(OBJ)
 	$(AR) rcs $@ $^
 
 %.o: %.c
-	@echo $(CC) -c $< -o $@
-	@$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 %.o: %.m
-	@echo $(CC) -c $< -o $@
-	@$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS)
