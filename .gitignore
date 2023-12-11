@@ -1,0 +1,6 @@
+.ccls*
+test*
+build
+.vscode
+*.a
+*.o
