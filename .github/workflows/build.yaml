@@ -1,0 +1,19 @@
+on:
+  workflow_dispatch:
+  create:
+  release:
+    types: [created]
+
+name: build libobjc
+jobs:
+  build:
+    name: build libobjc
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get cosmos-sdk
+        run: |
+          wget https://cosmo.zip/pub/cosmocc/cosmocc-3.1.3.zip
+          unzip cosmocc-3.1.3.zip
+          rm cosmocc-3.1.3.zip
+          tree
