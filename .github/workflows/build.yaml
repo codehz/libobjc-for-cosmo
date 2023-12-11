@@ -21,4 +21,5 @@ jobs:
           wget https://github.com/codehz/superconfigure/releases/download/main/x86_64-gcc.zip
           unzip -o '*.zip'
           rm *.zip
-          tree
+      - name: Run make
+        run: make && tree
