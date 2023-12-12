@@ -41,8 +41,13 @@ jobs:
             src/objc/*.h
       - name: Create zip for release
         run: |
-          cp -r src/objc .
-          zip -r release.zip libobjc.a .aarch64/libobjc.a objc/*.h
+          mkdir include
+          cp -r src/objc include
+          mkdir -p aarch64-linux-cosmo/lib/
+          cp .aarch64/libobjc.a aarch64-linux-cosmo/lib/libobjc.a
+          mkdir -p x86_64-linux-cosmo/lib/
+          cp libobjc.a x86_64-linux-cosmo/lib/libobjc.a
+          zip -r release.zip aarch64-linux-cosmo/lib/libobjc.a x86_64-linux-cosmo/lib/libobjc.a include/objc/*.h
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
