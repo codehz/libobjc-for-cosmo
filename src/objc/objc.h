@@ -34,15 +34,7 @@ extern "C" {
 #endif
 
 #include <stddef.h>
-
-/* The current version of the GNU Objective-C Runtime library in
-   compressed ISO date format.  This should be updated any time a new
-   version is released with changes to the public API (there is no
-   need to update it if there were no API changes since the previous
-   release).  This macro is only defined starting with the GNU
-   Objective-C Runtime shipped with GCC 4.6.0.  If it is not defined,
-   it is either an older version of the runtime, or another runtime.  */
-#define __GNU_LIBOBJC__ 20110608
+#include <stdbool.h>
 
 /* Definition of the boolean type.
 
@@ -52,10 +44,10 @@ extern "C" {
    Important: this could change and we could switch to 'typedef bool
    BOOL' in the future.  Do not depend on the type of BOOL.  */
 #undef BOOL
-typedef unsigned char  BOOL;
+typedef bool  BOOL;
 
-#define YES   (BOOL)1
-#define NO    (BOOL)0
+#define YES   (BOOL)true
+#define NO    (BOOL)false
 
 /* The basic Objective-C types (SEL, Class, id) are defined as pointer
    to opaque structures.  The details of the structures are private to

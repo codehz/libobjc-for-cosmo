@@ -141,7 +141,7 @@ objc_getProperty (id self, SEL __attribute__((unused)) _cmd, ptrdiff_t offset, B
    takes values from 0 to 2.  This hack was introduced by Apple; we
    do the same for compatibility reasons.  */
 void
-objc_setProperty (id self, SEL __attribute__((unused)) _cmd, ptrdiff_t offset, id new_value, BOOL is_atomic, BOOL should_copy)
+objc_setProperty (id self, SEL __attribute__((unused)) _cmd, ptrdiff_t offset, id new_value, BOOL is_atomic, signed char should_copy)
 {
   if (self != nil)
     {

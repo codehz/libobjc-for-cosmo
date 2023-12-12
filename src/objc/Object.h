@@ -32,27 +32,30 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 extern "C" {
 #endif
 
-/* The Object class is a very minimal root class included with the
-   runtime.  It is used as superclass for the two classes included
-   with the runtime, Protocol and NXConstantString.
-
-   Because Objective-C allows multiple root classes, you can define
-   your own root class, different from Object.
-
-   In particular, a Foundation library (such as GNUstep Base) is
-   expected to provide its own root class (typically called NSObject),
-   fully integrated with the library's own high-level features.  It is
-   expected that you should always use and interact with NSObject, and
-   mostly ignore Object.  */
-
-/* All classes are derived from Object.  As such, this is the overhead
-   tacked onto those objects.  */
-@interface Object
-{
-  Class isa; /* A pointer to the instance's class structure.  */
-}
+@protocol Object
 - (Class)class;
 - (BOOL)isEqual: (id)anObject;
+- (BOOL)isKindOfClass: (Class)aClass;
+- (BOOL)isMemberOfClass: (Class)aClass;
+- (id)performSelector: (SEL)aSelector;
+- (id)performSelector: (SEL)aSelector
+      withObject: (id)anObject;
+- (id)performSelector: (SEL)aSelector
+      withObject: (id)object1
+      withObject: (id)object2;
+- (BOOL)respondsToSelector: (SEL)aSelector;
+- (BOOL)conformsToProtocol: (Protocol*)aProtocol;
++ (id)alloc;
+- (void)dealloc;
++ (BOOL)resolveClassMethod: (SEL)name;
++ (BOOL)resolveInstanceMethod: (SEL)name;
+@end
+
+__attribute__((objc_root_class))
+@interface Object <Object>
+{
+  Class isa;
+}
 @end
 
 #ifdef __cplusplus
