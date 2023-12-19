@@ -38,6 +38,7 @@ extern const char* __objc_sparse3_id;
 #endif
 
 #include <stddef.h>
+#include "internal.h"
 
 extern int nbuckets;		/* for stats */
 extern int nindices;
@@ -150,20 +151,20 @@ struct sarray
   size_t capacity;
 };
 
-struct sarray* sarray_new (int, void* default_element);
-void sarray_free (struct sarray*);
-struct sarray* sarray_lazy_copy (struct sarray*);
-void sarray_realloc (struct sarray*, int new_size);
-void sarray_at_put (struct sarray*, sidx indx, void* elem);
-void sarray_at_put_safe (struct sarray*, sidx indx, void* elem);
+INTERNAL_API struct sarray* sarray_new (int, void* default_element);
+INTERNAL_API void sarray_free (struct sarray*);
+INTERNAL_API struct sarray* sarray_lazy_copy (struct sarray*);
+INTERNAL_API void sarray_realloc (struct sarray*, int new_size);
+INTERNAL_API void sarray_at_put (struct sarray*, sidx indx, void* elem);
+INTERNAL_API void sarray_at_put_safe (struct sarray*, sidx indx, void* elem);
 
-struct sarray* sarray_hard_copy (struct sarray*); /* ... like the name ?  */
-void sarray_remove_garbage (void);
+INTERNAL_API struct sarray* sarray_hard_copy (struct sarray*); /* ... like the name ?  */
+INTERNAL_API void sarray_remove_garbage (void);
 
 
 #ifdef PRECOMPUTE_SELECTORS
 /* Transform soffset values to ints and vice versa.  */
-static inline unsigned int
+INTERNAL_API static inline unsigned int
 soffset_decode (sidx indx)
 {
   union sofftype x;
@@ -177,7 +178,7 @@ soffset_decode (sidx indx)
 #endif /* OBJC_SPARSE2 */
 }
 
-static inline sidx
+INTERNAL_API static inline sidx
 soffset_encode (size_t offset)
 {
   union sofftype x;
@@ -193,13 +194,13 @@ soffset_encode (size_t offset)
 
 #else /* not PRECOMPUTE_SELECTORS */
 
-static inline size_t
+INTERNAL_API static inline size_t
 soffset_decode (sidx indx)
 {
   return indx;
 }
 
-static inline sidx
+INTERNAL_API static inline sidx
 soffset_encode (size_t offset)
 {
   return offset;
@@ -207,7 +208,7 @@ soffset_encode (size_t offset)
 #endif /* not PRECOMPUTE_SELECTORS */
 
 /* Get element from the Sparse array `array' at offset `indx'.  */
-static inline void* sarray_get (struct sarray* array, sidx indx)
+INTERNAL_API static inline void* sarray_get (struct sarray* array, sidx indx)
 {
 #ifdef PRECOMPUTE_SELECTORS
   union sofftype x;
@@ -232,7 +233,7 @@ static inline void* sarray_get (struct sarray* array, sidx indx)
 #endif /* not PRECOMPUTE_SELECTORS */
 }
 
-static inline void* sarray_get_safe (struct sarray* array, sidx indx)
+INTERNAL_API static inline void* sarray_get_safe (struct sarray* array, sidx indx)
 {
   if (soffset_decode (indx) < array->capacity)
     return sarray_get (array, indx);

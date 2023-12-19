@@ -29,6 +29,7 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 
 #include <stddef.h>
 #include <string.h>
+#include "internal.h"
 
 /*
  * This data structure is used to hold items
@@ -102,25 +103,25 @@ typedef struct cache
 
 /* Allocate and initialize a hash table.  */ 
 
-cache_ptr objc_hash_new (unsigned int size,
+INTERNAL_API cache_ptr objc_hash_new (unsigned int size,
 			 hash_func_type hash_func,
 			 compare_func_type compare_func);
                        
 /* Deallocate all of the hash nodes and the cache itself.  */
 
-void objc_hash_delete (cache_ptr cache);
+INTERNAL_API void objc_hash_delete (cache_ptr cache);
 
 /* Add the key/value pair to the hash table.  If the
    hash table reaches a level of fullness then it will be resized. 
                                                    
    assert if the key is already in the hash.  */
 
-void objc_hash_add (cache_ptr *cachep, const void *key, void *value);
+INTERNAL_API void objc_hash_add (cache_ptr *cachep, const void *key, void *value);
      
 /* Remove the key/value pair from the hash table.  
    assert if the key isn't in the table.  */
 
-void objc_hash_remove (cache_ptr cache, const void *key);
+INTERNAL_API void objc_hash_remove (cache_ptr cache, const void *key);
 
 /* Used to index through the hash table.  Start with NULL
    to get the first entry.
@@ -131,15 +132,15 @@ void objc_hash_remove (cache_ptr cache, const void *key);
    Cache nodes are returned such that key or value can
    be extracted.  */
 
-node_ptr objc_hash_next (cache_ptr cache, node_ptr node);
+INTERNAL_API node_ptr objc_hash_next (cache_ptr cache, node_ptr node);
 
 /* Used to return a value from a hash table using a given key.  */
 
-void *objc_hash_value_for_key (cache_ptr cache, const void *key);
+INTERNAL_API void *objc_hash_value_for_key (cache_ptr cache, const void *key);
 
 /* Used to determine if the given key exists in the hash table */
 
-BOOL objc_hash_is_key_in_hash (cache_ptr cache, const void *key);
+INTERNAL_API BOOL objc_hash_is_key_in_hash (cache_ptr cache, const void *key);
 
 /************************************************
 
@@ -153,7 +154,7 @@ BOOL objc_hash_is_key_in_hash (cache_ptr cache, const void *key);
    manipulation of the key pointer.  (Use the lowest bits
    except for those likely to be 0 due to alignment.)  */
 
-static inline unsigned int
+INTERNAL_API static inline unsigned int
 objc_hash_ptr (cache_ptr cache, const void *key)
 {
   return ((size_t)key / sizeof (void *)) & cache->mask;
@@ -162,7 +163,7 @@ objc_hash_ptr (cache_ptr cache, const void *key)
 
 /* Calculate a hash code by iterating over a NULL 
    terminate string.  */
-static inline unsigned int 
+INTERNAL_API static inline unsigned int 
 objc_hash_string (cache_ptr cache, const void *key)
 {
   unsigned int ret = 0;
@@ -179,7 +180,7 @@ objc_hash_string (cache_ptr cache, const void *key)
 
 
 /* Compare two pointers for equality.  */
-static inline int 
+INTERNAL_API static inline int 
 objc_compare_ptrs (const void *k1, const void *k2)
 {
   return (k1 == k2);
@@ -187,7 +188,7 @@ objc_compare_ptrs (const void *k1, const void *k2)
 
 
 /* Compare two strings.  */
-static inline int 
+INTERNAL_API static inline int 
 objc_compare_strings (const void *k1, const void *k2)
 {
   if (k1 == k2)

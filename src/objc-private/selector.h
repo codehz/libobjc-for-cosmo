@@ -25,6 +25,8 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #ifndef __objc_private_selector_INCLUDE_GNU
 #define __objc_private_selector_INCLUDE_GNU
 
+#include "internal.h"
+
 /* Private runtime functions that may go away or be rewritten or
    replaced.  */
 
@@ -37,7 +39,7 @@ struct objc_selector
 };
 
 /* An inline, fast version of sel_isEqual().  */
-inline static BOOL
+INTERNAL_API inline static BOOL
 sel_eq (SEL s1, SEL s2)
 {
   if (s1 == 0 || s2 == 0)
@@ -63,7 +65,7 @@ void __objc_register_selectors_from_module (struct objc_selector *selectors);
    it has been inserted into the selector table).  This is private as
    only the runtime should ever encounter or need to know about
    unmapped selectors.  */
-BOOL sel_is_mapped (SEL aSel);
+INTERNAL_API BOOL sel_is_mapped (SEL aSel);
 
 /* Return selector representing name without registering it if it
    doesn't exist.  Typically used internally by the runtime when it's

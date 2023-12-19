@@ -26,6 +26,8 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #include "objc-private/common.h"
 #include "objc/objc.h"
 
+#include "objc-private/internal.h"
+
 #if OBJC_WITH_GC
 
 #include "tconfig.h"
@@ -445,12 +447,12 @@ class_ivar_set_gcinvisible (Class class, const char *ivarname,
 
 #else /* !OBJC_WITH_GC */
 
-void
+INTERNAL_API void
 __objc_generate_gc_type_description (Class class __attribute__ ((__unused__)))
 {
 }
 
-void class_ivar_set_gcinvisible (Class class __attribute__ ((__unused__)),
+INTERNAL_API void class_ivar_set_gcinvisible (Class class __attribute__ ((__unused__)),
 				 const char *ivarname __attribute__ ((__unused__)),
 				 BOOL gc_invisible __attribute__ ((__unused__)))
 {

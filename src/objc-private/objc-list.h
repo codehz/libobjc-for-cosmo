@@ -26,6 +26,8 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #ifndef __GNU_OBJC_LIST_H
 #define __GNU_OBJC_LIST_H
 
+#include "internal.h"
+
 struct objc_list
 {
   void *head;
@@ -33,7 +35,7 @@ struct objc_list
 };
 
 /* Return a cons cell produced from (head . tail).  */
-static inline struct objc_list* 
+INTERNAL_API static inline struct objc_list* 
 list_cons (void* head, struct objc_list* tail)
 {
   struct objc_list* cell;
@@ -46,7 +48,7 @@ list_cons (void* head, struct objc_list* tail)
 
 /* Remove the element at the head by replacing it by its
    successor.  */
-static inline void
+INTERNAL_API static inline void
 list_remove_head (struct objc_list** list)
 {
   if ((*list)->tail)
@@ -70,7 +72,7 @@ list_remove_head (struct objc_list** list)
 
 
 /* Map FUNCTION over all elements in LIST.  */
-static inline void
+INTERNAL_API static inline void
 list_mapcar (struct objc_list* list, void(*function)(void*))
 {
   while (list)
@@ -81,7 +83,7 @@ list_mapcar (struct objc_list* list, void(*function)(void*))
 }
 
 /* Free list (backwards recursive).  */
-static inline void
+INTERNAL_API static inline void
 list_free (struct objc_list* list)
 {
   if(list)
